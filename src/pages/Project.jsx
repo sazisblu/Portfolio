@@ -123,12 +123,12 @@ function Project() {
   return (
     <>
       <div className="overflow-hidden fixed inset-0 h-screen z-50 pointer-events-none">
-         <motion.div
-                variants={variants}
-                animate={cursorType}
-                transition={{ type: "tween", ease: "backOut" }}
-                className="cursor fixed top-0 left-0  z-100 rounded-full pointer-events-none"
-              />
+        <motion.div
+          variants={variants}
+          animate={cursorType}
+          transition={{ type: "tween", ease: "backOut" }}
+          className="cursor fixed top-0 left-0  z-100 rounded-full pointer-events-none"
+        />
         <StaggeredMenu
           position="right"
           items={menuItems}
