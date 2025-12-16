@@ -1,0 +1,30 @@
+body{
+  cursor: none;
+  background-color: #f8f9fa;
+}
+
+@font-face {
+  font-family: libre;
+  src: url(./assets/fonts/LibreBaskerville-Regular.ttf);
+}
+@font-face {
+  font-family: archivo;
+  src: url(./assets/fonts/Archivo-Medium.ttf);
+}
+
+@font-face {
+  font-family: my_mono_regular;
+  src: url(./assets/fonts/SpaceMono-Regular.ttf);
+}
+@font-face {
+  font-family: my_mono_itallic;
+  src: url(./assets/fonts/SpaceMono-BoldItalic.ttf);
+}
+@import "tailwindcss";
+
+@theme {
+  --font-archivo: archivo;
+  --font-libre: libre;
+  --font-my_mono_regular:my_mono_regular;
+  --font-my-mono_itallic:my_mono_itallic;
+}

@@ -1,0 +1,251 @@
+import React from "react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { FaGithub, FaHeart } from "react-icons/fa";
+import { CiHeart } from "react-icons/ci";
+import project1 from "../assets/images/hk.png";
+import project2 from "../assets/images/Nix.png";
+import project3 from "../assets/images/logo.png";
+import project4 from "../assets/images/hc.png";
+import project5 from "../assets/images/tb.png";
+// import project2Img from "../assets/images/project2.png";
+// import project3Img from "../assets/images/project3.png";
+// import project4Img from "../assets/images/project4.png";
+// import project5Img from "../assets/images/project5.png";
+// import {} from "";
+function Project() {
+  const [mousePosition, setMousePosition] = useState({
+    x: 0,
+    y: 0,
+  });
+  console.log(mousePosition);
+
+  useEffect(() => {
+    let mouseMove = (e) => {
+      // console.log("mouse moved", "X:", e.clientX, "Y:", e.clientY);
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", mouseMove);
+    return () => {
+      window.removeEventListener("mousemove", mouseMove);
+    };
+  }, []);
+
+  const [cursorType, setCursorType] = useState("default");
+  const [liked, setLiked] = useState({
+    project1: false,
+    project2: false,
+    project3: false,
+    project4: false,
+    project5: false,
+  });
+
+  const toggleLike = (projectName) => {
+    setLiked((prev) => ({ ...prev, [projectName]: !prev[projectName] }));
+  }; // alternates between liked and not liked states for Liked prop
+
+  const variants = {
+    default: {
+      x: mousePosition.x - 15,
+      y: mousePosition.y - 15,
+      width: 30,
+      height: 30,
+      backgroundColor: "#000000",
+    },
+    text: {
+      x: mousePosition.x - 100,
+      y: mousePosition.y - 100,
+      width: 150,
+      height: 150,
+      backgroundColor: "#F8F9FA",
+      mixBlendMode: "difference",
+    },
+    smalltext: {
+      x: mousePosition.x - 25,
+      y: mousePosition.y - 25,
+      width: 50,
+      height: 50,
+      backgroundColor: "#023e8a",
+      mixBlendMode: "difference",
+    },
+  };
+
+  const setToText = () => {
+    setCursorType("text");
+  };
+  const setToDefault = () => {
+    setCursorType("default");
+  };
+
+  const setToSmallText = () => {
+    setCursorType("smalltext");
+  };
+
+  return (
+    <>
+    
+      <motion.div
+        variants={variants}
+        animate={cursorType}
+        transition={{ type: "tween", ease: "backOut" }}
+        className="cursor fixed top-0 left-0  z-100 rounded-full pointer-events-none"
+      />
+
+      <div className="font-archivo font-bold mt-10 text-6xl text-center ">
+        My Projects
+      </div>
+      <div className="w-full flex items-center justify-center py-10">
+        <div className="grid h-auto w-[90%] md:w-[80%] p-10 border-black-500 grid-cols-1 md:grid-cols-3 md:grid-rows-6 gap-10">
+          <div className="min-h-[250px] flex flex-col items-center justify-between p-4 md:p-6 md:col-span-2 md:row-span-4 bg-[#f8f9fa] border border-gray-300 rounded-2xl shadow-lg">
+            <div
+              className="w-full h-48 md:h-64 bg-cover bg-center rounded-lg mb-3"
+              style={{ backgroundImage: `url(${project1})` }}
+            ></div>
+            <div className="md:text-6xl text-4xl mt-3 md:mt-5 font-archivo text-black">
+              Hisab Kitab
+            </div>
+            <div className="flex gap-2 md:gap-4 mb-2 md:mb-4">
+              <button className="flex items-center justify-center gap-1 md:gap-2 bg-black text-white px-3 md:px-6 py-2 md:py-3 text-xs md:text-base rounded-lg hover:bg-gray-800 transition">
+                <FaGithub className="w-4 h-4 md:w-5 md:h-5" />
+                <a
+                  href="https://github.com/Ambiton-HackFest-2082/Profit.exe"
+                  target="new"
+                >
+                  <span className="hidden sm:inline font-archivo">GitHub</span>
+                </a>
+              </button>
+              <button
+                onClick={() => toggleLike("project1")}
+                className="flex items-center justify-center gap-1 md:gap-2 bg-white text-black px-3 md:px-6 py-2 md:py-3 text-xs md:text-base rounded-lg hover:bg-gray-100 transition"
+              >
+                {liked.project1 ? (
+                  <FaHeart className="w-4 h-4 md:w-5 md:h-5" color="tomato" />
+                ) : (
+                  <CiHeart className="w-4 h-4 md:w-5 md:h-5" />
+                )}
+                <span className="hidden sm:inline font-archivo">Like</span>
+              </button>
+            </div>
+          </div>
+          <div className="min-h-[300px] flex flex-col items-center justify-between p-4 md:p-6 md:col-span-1 md:row-span-2 bg-[#f8f9fa] border-2 border-gray-300  rounded-2xl shadow-lg">
+            <div
+              className="w-full h- md:h-40 bg-cover bg-center rounded-lg mb-3"
+              style={{ backgroundImage: `url(${project2})` }}
+            ></div>
+            <div className="text-3xl md:text-4xl mt-3 md:mt-5 font-archivo text-black">
+              Dot Files
+            </div>
+            <div className="flex gap-2 md:gap-3 mb-2 md:mb-4">
+              <button className="flex items-center justify-center gap-1 bg-black text-white px-2 md:px-4 py-1.5 md:py-2 text-xs md:text-sm rounded-lg hover:bg-gray-800 transition">
+                <FaGithub className="w-3 h-3 md:w-4 md:h-4" />
+                <a href="https://github.com/sazisblu" target="new">
+                  <span className="hidden sm:inline font-archivo">GitHub</span>
+                </a>
+              </button>
+              <button
+                onClick={() => toggleLike("project2")}
+                className="flex items-center justify-center gap-1 bg-white text-black px-2 md:px-4 py-1.5 md:py-2 text-xs md:text-sm rounded-lg hover:bg-gray-100 transition"
+              >
+                {liked.project2 ? (
+                  <FaHeart className="w-3 h-3 md:w-4 md:h-4" color="tomato" />
+                ) : (
+                  <CiHeart className="w-3 h-3 md:w-4 md:h-4" />
+                )}
+                <span className="hidden sm:inline font-archivo">Like</span>
+              </button>
+            </div>
+          </div>
+          <div className="min-h-[300px] flex flex-col items-center justify-between p-4 md:p-6 md:col-span-1 md:row-span-2 bg-[#f8f9fa] border-2  border-gray-300  rounded-2xl shadow-lg">
+            <div
+              className="w-full h-32 md:h-40 bg-cover bg-center rounded-lg mb-3"
+              style={{ backgroundImage: `url(${project5})` }}
+            ></div>
+            <div className="text-3xl md:text-4xl mt-3 md:mt-5 font-archivo text-black">
+              Tobey Boxxed
+            </div>
+            <div className="flex gap-2 md:gap-3 mb-2 md:mb-4">
+              <button className="flex items-center justify-center gap-1 bg-black text-white px-2 md:px-4 py-1.5 md:py-2 text-xs md:text-sm rounded-lg hover:bg-gray-800 transition">
+                <FaGithub className="w-3 h-3 md:w-4 md:h-4" />
+                <a href="https://github.com/sazisblu/Tobey-Boxed" target="new">
+                  <span className="hidden sm:inline font-archivo">GitHub</span>
+                </a>
+              </button>
+              <button
+                onClick={() => toggleLike("project3")}
+                className="flex items-center justify-center gap-1 bg-white text-black px-2 md:px-4 py-1.5 md:py-2 text-xs md:text-sm rounded-lg hover:bg-gray-100 transition"
+              >
+                {liked.project3 ? (
+                  <FaHeart className="w-3 h-3 md:w-4 md:h-4" color="tomato" />
+                ) : (
+                  <CiHeart className="w-3 h-3 md:w-4 md:h-4" />
+                )}
+                <span className="hidden sm:inline font-archivo">Like</span>
+              </button>
+            </div>
+          </div>
+          <div className="min-h-[300px] flex flex-col items-center justify-between p-4 md:p-6 md:col-span-1 md:row-span-2 bg-[#f8f9fa] border-2  border-gray-300   rounded-2xl shadow-lg">
+            <div
+              className="w-full h-32 md:h-40 bg-cover bg-center rounded-lg mb-3"
+              style={{ backgroundImage: `url(${project3})` }}
+            ></div>
+            <div className="text-3xl md:text-4xl mt-3 md:mt-5 font-archivo text-black">
+              Pustak
+            </div>
+            <div className="flex gap-2 md:gap-3 mb-2 md:mb-4">
+              <button className="flex items-center justify-center gap-1 bg-black text-white px-2 md:px-4 py-1.5 md:py-2 text-xs md:text-sm rounded-lg hover:bg-gray-800 transition">
+                <FaGithub className="w-3 h-3 md:w-4 md:h-4" />
+                <a
+                  href="https://github.com/X-COBWEB/PUSTAK-FINAL-VER"
+                  target="new"
+                >
+                  <span className="hidden sm:inline font-archivo">GitHub</span>
+                </a>
+              </button>
+              <button
+                onClick={() => toggleLike("project4")}
+                className="flex items-center justify-center gap-1 bg-white text-black px-2 md:px-4 py-1.5 md:py-2 text-xs md:text-sm rounded-lg hover:bg-gray-100 transition"
+              >
+                {liked.project4 ? (
+                  <FaHeart className="w-3 h-3 md:w-4 md:h-4" color="tomato" />
+                ) : (
+                  <CiHeart className="w-3 h-3 md:w-4 md:h-4" />
+                )}
+                <span className="hidden sm:inline font-archivo">Like</span>
+              </button>
+            </div>
+          </div>
+          <div className="min-h-[300px] flex flex-col items-center justify-between p-4 md:p-6 md:col-span-2 md:row-span-2 bg-[#f8f9fa] border border-gray-300 rounded-2xl shadow-lg">
+            <div
+              className="w-full h-40 md:h-48 bg-cover bg-center rounded-lg mb-3"
+              style={{ backgroundImage: `url(${project4})` }}
+            ></div>
+            <div className="text-4xl md:text-5xl mt-3 md:mt-5 font-archivo text-black">
+              Hamro Chautari
+            </div>
+            <div className="flex gap-2 md:gap-4 mb-2 md:mb-4">
+              <button className="flex items-center justify-center gap-1 md:gap-2 bg-black text-white px-3 md:px-6 py-2 md:py-3 text-xs md:text-base rounded-lg hover:bg-gray-800 transition">
+                <FaGithub className="w-4 h-4 md:w-5 md:h-5" />
+                <a href="https://github.com/sazisblu" target="new">
+                  <span className="hidden sm:inline font-archivo">GitHub</span>
+                </a>
+              </button>
+              <button
+                onClick={() => toggleLike("project5")}
+                className="flex items-center justify-center gap-1 md:gap-2 bg-white text-black px-3 md:px-6 py-2 md:py-3 text-xs md:text-base rounded-lg hover:bg-gray-100 transition"
+              >
+                {liked.project5 ? (
+                  <FaHeart className="w-4 h-4 md:w-5 md:h-5" color="tomato" />
+                ) : (
+                  <CiHeart className="w-4 h-4 md:w-5 md:h-5" />
+                )}
+                <span className="hidden sm:inline font-archivo">Like</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Project;
