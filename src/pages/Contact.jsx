@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import emailjs from "@emailjs/browser";
+import { motion, AnimatePresence } from "framer-motion";
 import StaggeredMenu from "../components/StaggeredMenu";
+import { FaCheckCircle } from "react-icons/fa";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -8,11 +10,29 @@ function Contact() {
     email: "",
     message: "",
   });
+  const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const YOUR_SERVICE_ID = "service_zxmrtdg";
+    const YOUR_PUBLIC_KEY = "TMI_IXQ-r26uwsK3c";
+    const YOUR_TEMPLATE_ID = "template_clpgd86";
+    emailjs
+      .sendForm(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, form.current, {
+        publicKey: YOUR_PUBLIC_KEY,
+      })
+      .then(
+        () => {
+          console.log("SUCCESS!");
+          setShowModal(true);
+          setFormData({ name: "", email: "", message: "" });
+          setTimeout(() => setShowModal(false), 3000);
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
     console.log("Form submitted:", formData);
-    // Add your form submission logic here
   };
 
   const handleChange = (e) => {
@@ -84,8 +104,39 @@ function Contact() {
   const socialItems = [
     { label: "GitHub", link: "https://github.com/sazisblu" },
   ];
+
+  const form = useRef();
+
   return (
     <div className="min-h-screen bg-[#f8f9fa] py-12 px-4">
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black bg-opacity-50 pointer-events-auto"
+            onClick={() => setShowModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="bg-white rounded-2xl p-8 flex flex-col items-center gap-4 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <FaCheckCircle size={64} className="text-green-500" />
+              <h2 className="text-3xl font-bold font-my_mono_regular text-black">
+                Thank You!
+              </h2>
+              <p className="text-lg font-archivo text-black text-center">
+                Your message has been sent successfully.
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <motion.div
         variants={variants}
         animate={cursorType}
@@ -122,6 +173,7 @@ function Contact() {
         </motion.div>
 
         <motion.form
+          ref={form}
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}

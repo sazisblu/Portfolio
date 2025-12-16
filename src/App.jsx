@@ -111,7 +111,7 @@ function App() {
           onMouseEnter={setToSmallText}
           onMouseLeave={setToDefault}
         >
-          <MdDarkMode size={50} />
+          {/* <MdDarkMode size={50} /> */}
           <FaGithub size={50} />
         </div>
       </motion.div>
